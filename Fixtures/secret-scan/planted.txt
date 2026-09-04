@@ -1,0 +1,9 @@
+This file exists ONLY to prove scripts/secret-scan.sh actually detects
+credentials. Every value below is fake and inert. This directory is
+excluded from the real scan; `secret-scan.sh --self-test` asserts that
+each line here IS detected. If the self-test ever passes trivially, the
+scanner has silently stopped working.
+
+apiKey = "AKIAIOSFODNN7EXAMPLE0000"
+github_token: "ghp_0000000000000000000000000000000000"
+password = "hunter2hunter2hunter2hunter2"

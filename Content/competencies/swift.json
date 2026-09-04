@@ -1,0 +1,140 @@
+{
+  "contentVersion": "0.1.0",
+  "competencies": [
+    {
+      "id": "swift.arc",
+      "category": "swift",
+      "title": "ARC and object lifetime",
+      "summary": "Can explain how ARC decides when an object is deallocated and reason about ownership.",
+      "importance": 5,
+      "interviewFrequency": "nearCertain",
+      "dimensionProfile": "diagnostic",
+      "isCore": true,
+      "targetLevels": [
+        "foundation",
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [],
+      "relatedCompetencies": [
+        "swift.weakunowned",
+        "swift.classes"
+      ],
+      "coverageTopics": [
+        "retain/release inserted at compile time, not garbage collection",
+        "strong references and reference counts",
+        "deinit and when it runs",
+        "why ARC applies to classes and not structs",
+        "autorelease behaviour at a working level"
+      ],
+      "mistakes": [
+        "calling ARC a garbage collector",
+        "believing ARC runs periodically rather than deterministically"
+      ]
+    },
+    {
+      "id": "swift.closures",
+      "category": "swift",
+      "title": "Closures and capture",
+      "summary": "Can explain closure capture semantics and capture lists, and predict what a closure keeps alive.",
+      "importance": 5,
+      "interviewFrequency": "nearCertain",
+      "dimensionProfile": "balanced",
+      "isCore": true,
+      "targetLevels": [
+        "foundation",
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [],
+      "relatedCompetencies": [
+        "swift.escaping",
+        "swift.weakunowned"
+      ],
+      "coverageTopics": [
+        "closures capture by reference by default",
+        "capture lists and capture-at-creation semantics",
+        "trailing closure syntax",
+        "closures as reference types",
+        "what a stored closure keeps alive"
+      ],
+      "mistakes": [
+        "assuming a capture list copies the whole object graph",
+        "believing value types captured in a closure are always copied at call time"
+      ]
+    },
+    {
+      "id": "swift.escaping",
+      "category": "swift",
+      "title": "Escaping vs non-escaping closures",
+      "summary": "Can explain what @escaping means, why the compiler cares, and its ownership implications.",
+      "importance": 5,
+      "interviewFrequency": "common",
+      "dimensionProfile": "balanced",
+      "isCore": true,
+      "targetLevels": [
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [
+        "swift.closures"
+      ],
+      "relatedCompetencies": [
+        "swift.closures",
+        "swift.weakunowned"
+      ],
+      "coverageTopics": [
+        "escaping means the closure outlives the function call",
+        "non-escaping is the default and enables optimisations",
+        "escaping closures require explicit self",
+        "stored closures and completion handlers are escaping",
+        "relationship to retain cycles"
+      ],
+      "mistakes": [
+        "thinking @escaping is a performance annotation",
+        "assuming non-escaping closures can be stored for later"
+      ]
+    },
+    {
+      "id": "swift.weakunowned",
+      "category": "swift",
+      "title": "weak, unowned, and retain cycles",
+      "summary": "Can identify a retain cycle, choose correctly between weak and unowned, and explain what breaks when the choice is wrong.",
+      "importance": 5,
+      "interviewFrequency": "nearCertain",
+      "dimensionProfile": "diagnostic",
+      "isCore": true,
+      "targetLevels": [
+        "foundation",
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [
+        "swift.arc"
+      ],
+      "relatedCompetencies": [
+        "swift.arc",
+        "swift.closures",
+        "swift.escaping",
+        "debugging.memorygraph"
+      ],
+      "coverageTopics": [
+        "strong reference cycles between objects",
+        "closure capture cycles",
+        "weak: optional, becomes nil, safe",
+        "unowned: non-optional, crashes if accessed after deallocation",
+        "choosing based on lifetime guarantees, not on convenience",
+        "delegate reference conventions"
+      ],
+      "mistakes": [
+        "using unowned to avoid optionality without a lifetime guarantee",
+        "adding [weak self] everywhere reflexively, including where no cycle exists",
+        "believing structs can participate in retain cycles directly"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "contentVersion": "0.0.1",
+  "competencies": [
+    { "id": "swift.alpha", "category": "swift", "title": "Alpha", "summary": "s",
+      "importance": 9, "interviewFrequency": "common", "dimensionProfile": "balanced",
+      "isCore": true, "targetLevels": ["mid"], "prerequisites": [], "coverageTopics": ["t"] },
+    { "id": "swift.alpha", "category": "swift", "title": "Duplicate of alpha", "summary": "s",
+      "importance": 3, "interviewFrequency": "common", "dimensionProfile": "balanced",
+      "isCore": true, "targetLevels": ["mid"], "prerequisites": [], "coverageTopics": ["t"] },
+    { "id": "swift.gamma", "category": "swift", "title": "Gamma", "summary": "s",
+      "importance": 3, "interviewFrequency": "common", "dimensionProfile": "balanced",
+      "isCore": true, "targetLevels": ["mid"], "prerequisites": ["swift.delta"],
+      "coverageTopics": ["t"] },
+    { "id": "swift.delta", "category": "swift", "title": "Delta", "summary": "s",
+      "importance": 3, "interviewFrequency": "common", "dimensionProfile": "balanced",
+      "isCore": true, "targetLevels": ["mid"], "prerequisites": ["swift.gamma"],
+      "coverageTopics": ["t"] }
+  ]
+}

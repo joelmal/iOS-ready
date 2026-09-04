@@ -2132,7 +2132,8 @@ The agent will not always run where it can build an iOS app. Pretending otherwis
 |---|---|---|---|
 | **A** | macOS + Xcode + simulators | everything: iOS build/test, runner with real `xcodebuild`, device install | — |
 | **B** | macOS, no simulator runtime or no full Xcode | `swift test`, content, runner parser tests | iOS build/test |
-| **C** | Linux / container / web session | `swift test` on `IOSReadyKit`, content validation, runner parser tests over fixtures, all authoring, docs, state | anything requiring Apple SDKs, simulators, or `xcodebuild` |
+| **C** | Linux / container / web session **with** a Swift toolchain | `swift test` on `IOSReadyKit`, content validation, runner parser tests over fixtures, all authoring, docs, state | anything requiring Apple SDKs, simulators, or `xcodebuild` |
+| **C₀** | Any machine with **no Swift toolchain** (some containers and web sessions) | content validation, state integrity, the command contract itself, authoring, docs, ADRs | **any Swift compilation or test at all** |
 
 ### 22.1 Rules
 
@@ -2141,6 +2142,7 @@ The agent will not always run where it can build an iOS app. Pretending otherwis
 3. A milestone cannot pass its Human Review Gate while its verification queue is non-empty. This is how iPhone-first quality is protected from being verified only in theory.
 4. Tier C is a **productive** tier, not a degraded one. Scoring, training, content, parsers, AI response handling, persistence, resume parsing, docs, and state work are all fully verifiable there. Roughly 80% of this project's logic can be built and proven on Linux. Plan work accordingly: batch UI work for Tier A sessions.
 5. Never fake a Tier-A capability (e.g. do not stub `xcodebuild` and claim tests passed). If you cannot verify, say so.
+6. **Tier C₀ is real and must be planned around.** A Linux container may have no Swift at all, and the toolchain may be unreachable behind an outbound proxy. In C₀, do not write large amounts of Swift: several thousand lines that have never seen a compiler, handed to a Tier-A machine, is the anti-pattern in 27.8 wearing a disguise. Instead take the work that is genuinely verifiable there — content authoring, schemas, the command contract, validators, docs, ADRs, state — and record the Swift work as `blocked` with a reason. `bootstrap.sh` reports `swift=absent` and `verify.sh` prints it in the summary block, so this condition is always visible rather than inferred.
 
 ---
 

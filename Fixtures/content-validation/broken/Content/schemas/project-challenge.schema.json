@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iosready.local/schemas/project-challenge.schema.json",
+  "title": "Project challenge manifest",
+  "description": "challenge.json beside an Xcode starter project. Graded by the Mac runner. Needed by Milestone 3. Master plan Sections 16.2, 16.3.",
+  "type": "object",
+  "required": ["id", "contentVersion", "competencyIds", "schemeName", "allowedDependencies",
+               "acceptanceCriteria", "timeBudgetMinutes", "rubricVersion"],
+  "properties": {
+    "id": { "type": "string" },
+    "contentVersion": { "type": "string" },
+    "competencyIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "schemeName": { "type": "string", "description": "Pinned; the runner does not guess." },
+    "visibleTestPaths": { "type": "array", "items": { "type": "string" } },
+    "hiddenTestSourcePath": { "type": "string",
+      "description": "Copied in by the runner at grading time; never present in the starter." },
+    "allowedDependencies": { "type": "array", "items": { "type": "string" },
+      "description": "Runner refuses to build if the project declares anything else (16.3)." },
+    "structuralChecks": { "type": "array", "items": {
+      "type": "object", "required": ["kind", "pattern", "description"],
+      "properties": { "kind": { "type": "string", "enum": ["required", "forbidden", "signature"] },
+                      "pattern": { "type": "string" }, "description": { "type": "string" },
+                      "scope": { "type": "string" } } } },
+    "acceptanceCriteria": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "timeBudgetMinutes": { "type": "integer", "minimum": 15 },
+    "rubricVersion": { "type": "string" }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "contentVersion": "0.1.0",
+  "competencies": [
+    {
+      "id": "concurrency.actors",
+      "category": "concurrency",
+      "title": "Actors and actor isolation",
+      "summary": "Can explain how actors protect mutable state, reason about reentrancy, and use them correctly instead of as locks.",
+      "importance": 5,
+      "interviewFrequency": "common",
+      "dimensionProfile": "balanced",
+      "isCore": true,
+      "targetLevels": [
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [
+        "concurrency.asyncawait"
+      ],
+      "relatedCompetencies": [
+        "concurrency.mainactor",
+        "concurrency.sendable",
+        "concurrency.dataraces"
+      ],
+      "coverageTopics": [
+        "actor declaration and isolated state",
+        "cross-actor access requires await",
+        "reentrancy and interleaving at suspension points",
+        "nonisolated members",
+        "actor hopping and its cost",
+        "when an actor is the wrong tool"
+      ],
+      "mistakes": [
+        "treating an actor as a mutex that blocks other callers",
+        "assuming state cannot change across an await inside an actor method",
+        "wrapping every type in an actor rather than isolating the shared state"
+      ]
+    },
+    {
+      "id": "concurrency.mainactor",
+      "category": "concurrency",
+      "title": "MainActor and UI isolation",
+      "summary": "Can explain what @MainActor guarantees, where isolation is inherited, and how to move work off and back onto the main actor correctly.",
+      "importance": 5,
+      "interviewFrequency": "nearCertain",
+      "dimensionProfile": "balanced",
+      "isCore": true,
+      "targetLevels": [
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [
+        "concurrency.asyncawait"
+      ],
+      "relatedCompetencies": [
+        "concurrency.actors",
+        "concurrency.sendable",
+        "swiftui.state"
+      ],
+      "coverageTopics": [
+        "@MainActor on types, members and closures",
+        "isolation inheritance",
+        "why DispatchQueue.main.async is usually the wrong reach in modern code",
+        "await hopping back to the main actor",
+        "Task { } inheriting actor context vs Task.detached"
+      ],
+      "mistakes": [
+        "believing @MainActor makes code run synchronously on the main thread from anywhere",
+        "using Task.detached and then wondering why UI updates warn",
+        "annotating an entire service with @MainActor to silence warnings"
+      ]
+    },
+    {
+      "id": "concurrency.asyncawait",
+      "category": "concurrency",
+      "title": "async/await fundamentals",
+      "summary": "Can explain suspension, how await differs from blocking, and how async functions compose.",
+      "importance": 5,
+      "interviewFrequency": "nearCertain",
+      "dimensionProfile": "balanced",
+      "isCore": true,
+      "targetLevels": [
+        "foundation",
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [],
+      "relatedCompetencies": [
+        "concurrency.model",
+        "concurrency.task",
+        "concurrency.structured"
+      ],
+      "coverageTopics": [
+        "suspension points and what await actually does",
+        "async functions do not block a thread",
+        "calling async code from synchronous contexts",
+        "sequential awaits vs concurrent work",
+        "the cooperative thread pool"
+      ],
+      "mistakes": [
+        "describing await as blocking the thread",
+        "assuming two sequential awaits run concurrently",
+        "thinking async implies a background thread"
+      ]
+    },
+    {
+      "id": "concurrency.dataraces",
+      "category": "concurrency",
+      "title": "Recognising and fixing data races",
+      "summary": "Can spot unsynchronised shared mutable state and choose an appropriate fix.",
+      "importance": 5,
+      "interviewFrequency": "common",
+      "dimensionProfile": "diagnostic",
+      "isCore": true,
+      "targetLevels": [
+        "mid",
+        "strongMid",
+        "senior"
+      ],
+      "prerequisites": [
+        "concurrency.asyncawait"
+      ],
+      "relatedCompetencies": [
+        "concurrency.actors",
+        "concurrency.sendable"
+      ],
+      "coverageTopics": [
+        "what makes an access a data race",
+        "symptoms: intermittent corruption, unreproducible crashes",
+        "Thread Sanitizer",
+        "fixes: isolation, value semantics, immutability",
+        "why 'it works on my device' is not evidence of safety"
+      ],
+      "mistakes": [
+        "assuming a crash-free run proves thread safety",
+        "adding a lock around reads but not writes"
+      ]
+    }
+  ]
+}

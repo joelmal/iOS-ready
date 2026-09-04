@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iosready.local/schemas/mission.schema.json",
+  "title": "Guided mission",
+  "description": "One step of the guided app curriculum. Needed by Milestone 4. Master plan Sections 10.2, 10.3.",
+  "type": "object",
+  "required": ["id", "contentVersion", "sequence", "title", "competencyIds", "learningObjectives",
+               "prerequisites", "guidedTask", "independentTask", "verification",
+               "completionCriteria", "estimatedMinutes"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^mission\\.[0-9]{2}$" },
+    "contentVersion": { "type": "string" },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string" },
+    "competencyIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "learningObjectives": { "type": "array", "minItems": 3, "items": {
+      "type": "object", "required": ["text", "competencyId"],
+      "properties": { "text": { "type": "string" }, "competencyId": { "type": "string" } } } },
+    "prerequisites": { "type": "array", "items": { "type": "string" } },
+    "refresherLessonIds": { "type": "array", "items": { "type": "string" } },
+    "explainQuestionIds": { "type": "array", "items": { "type": "string" } },
+    "guidedTask": { "type": "object", "required": ["summary", "steps"],
+      "properties": { "summary": { "type": "string" },
+                      "steps": { "type": "array", "items": { "type": "string" } } } },
+    "independentTask": { "type": "object", "required": ["requirements"],
+      "properties": { "requirements": { "type": "array", "items": { "type": "string" } } } },
+    "verification": { "type": "object", "required": ["method"],
+      "properties": {
+        "method": { "type": "string",
+          "enum": ["automatedTests", "structuralChecks", "aiCodeReview", "selfAttestation"] },
+        "testBundlePath": { "type": "string" },
+        "structuralChecks": { "type": "array", "items": { "type": "object" } },
+        "mandatoryTests": { "type": "boolean" } } },
+    "debugReviewChallengeId": { "type": "string" },
+    "assessmentQuestionIds": { "type": "array", "items": { "type": "string" } },
+    "completionCriteria": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "estimatedMinutes": { "type": "integer", "minimum": 10 }
+  }
+}

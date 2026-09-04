@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-04T00:00:00Z",
+  "projectPhase": "in-development",
+  "currentMilestone": "M0",
+  "currentSlice": "M0-S6 (scaffolding pulled forward; M0-S1..S5 are Swift work and remain open)",
+  "currentBranch": "claude/ios-ready-plan-review-aag8r3",
+  "lastCompletedMilestone": null,
+  "environmentTier": "C",
+  "toolchain": { "swift": "absent", "xcode": "absent" },
+  "lastVerify": {
+    "at": "2026-09-04T00:00:00Z",
+    "result": "PASS_WITH_SKIPS",
+    "coreTests": "skipped:no-package-and-no-swift",
+    "contentValidation": "passed",
+    "iosBuild": "skipped:no-xcode",
+    "skipped": ["core_tests", "runner_tests", "ios_build", "ios_tests"]
+  },
+  "contentCounts": {
+    "competencies": 8,
+    "questions": 5,
+    "behavioral": 0,
+    "snippetChallenges": 0,
+    "projectChallenges": 0,
+    "missions": 0,
+    "lessons": 1
+  },
+  "openBlockerCount": 1,
+  "verificationQueueCount": 3,
+  "nextAction": "Resume on a machine with a Swift toolchain (Tier A/B). Start M0-S1: create Packages/IOSReadyKit with the module structure from master plan 17.2 (IOSReadyDomain, IOSReadyContent, IOSReadyScoring, IOSReadyTraining, IOSReadyAI, IOSReadyPersistence, IOSReadyRunnerAPI) plus one test target per module, Swift 6 language mode and strict concurrency on. The command contract, content schemas, sample content, validators, state ledger, docs and ADRs already exist and pass; `make verify` currently reports PASS_WITH_SKIPS with core/runner/iOS steps skipped only because the package and app target do not exist yet. Then M0-S2 (domain models, Clock/UUIDProvider, JSONL evidence store) and M0-S3 (Swift Codable mirrors of Content/schemas/*.json plus ContentValidationTests, which supersedes scripts/validate_content.py as the authoritative validator)."
+}

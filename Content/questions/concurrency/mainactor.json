@@ -1,0 +1,48 @@
+{
+  "contentVersion": "0.1.0",
+  "questions": [
+    {
+      "id": "q.concurrency.mainactor.001",
+      "contentVersion": "0.1.0",
+      "competencyIds": ["concurrency.mainactor"],
+      "primaryCompetencyId": "concurrency.mainactor",
+      "dimension": "explain",
+      "category": "concurrency",
+      "type": "explain",
+      "difficulty": 2,
+      "targetLevels": ["foundation", "mid", "strongMid"],
+      "interviewFrequency": "nearCertain",
+      "prompt": "What does @MainActor actually guarantee, and how is it different from calling DispatchQueue.main.async?",
+      "targetAnswerSeconds": 75,
+      "targetAnswerWords": 160,
+      "expectedConcepts": [
+        { "id": "isolation", "text": "@MainActor isolates the annotated code to the main actor", "required": true,
+          "synonyms": ["isolated", "isolation", "main actor", "runs on main"] },
+        { "id": "compileTime", "text": "It is a compile-time guarantee, checked statically", "required": true,
+          "synonyms": ["compile time", "compiler", "statically", "checked"] },
+        { "id": "awaitHop", "text": "Calling into it from elsewhere requires await, which hops to the main actor", "required": true,
+          "synonyms": ["await", "hop", "suspend", "asynchronously"] },
+        { "id": "dispatchDifference", "text": "DispatchQueue.main.async is a runtime scheduling call with no compile-time checking", "required": true,
+          "synonyms": ["runtime", "no checking", "unchecked", "manual", "dispatch"] }
+      ],
+      "misconceptions": [
+        { "text": "@MainActor makes the call run synchronously on the main thread from any context", "severity": "major" },
+        { "text": "@MainActor and DispatchQueue.main.async are interchangeable", "severity": "major" }
+      ],
+      "tradeoffKeywords": ["granularity", "over-annotation", "contention"],
+      "modelAnswerOutline": [
+        "@MainActor marks code as isolated to the main actor.",
+        "The compiler then refuses unsafe access from other isolation domains — it is a static guarantee.",
+        "From a non-main context you must await, which suspends and resumes on the main actor.",
+        "DispatchQueue.main.async only schedules at runtime; nothing verifies you remembered.",
+        "Over-annotating whole services with @MainActor to silence warnings serializes work that need not be."
+      ],
+      "followUpSeeds": [
+        "Where does a Task { } created inside a @MainActor type run?",
+        "How would you move expensive decoding off the main actor and still update the UI safely?"
+      ],
+      "rubricVersion": "rubric.v1",
+      "tags": ["swift6", "high-value"]
+    }
+  ]
+}

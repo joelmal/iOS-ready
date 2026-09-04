@@ -1,0 +1,53 @@
+name: verify
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+# Runs the same `make verify` a human and an agent run locally, so there is
+# exactly one definition of "healthy" (master plan Section 21).
+#
+# This is the Linux job: it covers content validation, state integrity, the
+# secret scan, and — once Packages/IOSReadyKit exists — the core package tests.
+# iOS build and simulator tests require a macOS runner and are deliberately
+# skipped here rather than faked. `verify.sh` reports them as skipped, which is
+# not a pass; anything they would have verified belongs in
+# state/VERIFICATION_QUEUE.md.
+
+jobs:
+  verify-linux:
+    name: verify (Linux, Tier C)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+        continue-on-error: true
+        id: swift
+        with:
+          swift-version: "6.0"
+
+      - name: Report toolchain
+        run: |
+          if [ "${{ steps.swift.outcome }}" != "success" ]; then
+            echo "::warning::Swift toolchain unavailable; core package tests will be skipped."
+          fi
+          swift --version || true
+
+      - name: Bootstrap
+        run: make bootstrap
+
+      - name: Verify
+        run: make verify
+
+      - name: Upload verify output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-output
+          path: |
+            state/ENVIRONMENT.md
+          if-no-files-found: ignore

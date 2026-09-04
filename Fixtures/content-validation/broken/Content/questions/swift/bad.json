@@ -1,0 +1,11 @@
+{
+  "contentVersion": "0.0.1",
+  "questions": [
+    { "id": "q.swift.alpha.001", "contentVersion": "0.0.1",
+      "competencyIds": ["swift.doesNotExist"], "primaryCompetencyId": "swift.doesNotExist",
+      "dimension": "explain", "category": "swift", "type": "explain", "difficulty": 2,
+      "targetLevels": ["mid"], "interviewFrequency": "common", "prompt": "p",
+      "expectedConcepts": [{ "id": "c", "text": "t", "required": false, "synonyms": [] }],
+      "modelAnswerOutline": ["o"], "rubricVersion": "rubric.v1" }
+  ]
+}

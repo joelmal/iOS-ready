@@ -1,0 +1,91 @@
+{
+  "contentVersion": "0.1.0",
+  "questions": [
+    {
+      "id": "q.concurrency.actors.001",
+      "contentVersion": "0.1.0",
+      "competencyIds": ["concurrency.actors", "concurrency.dataraces"],
+      "primaryCompetencyId": "concurrency.actors",
+      "dimension": "explain",
+      "category": "concurrency",
+      "type": "explain",
+      "difficulty": 2,
+      "targetLevels": ["mid", "strongMid"],
+      "interviewFrequency": "common",
+      "prompt": "What problem do actors solve, and how do they solve it?",
+      "targetAnswerSeconds": 75,
+      "targetAnswerWords": 150,
+      "expectedConcepts": [
+        { "id": "sharedMutableState", "text": "Actors protect shared mutable state from concurrent access", "required": true,
+          "synonyms": ["shared mutable state", "mutable state", "data race", "race condition"] },
+        { "id": "serialization", "text": "Only one task executes actor-isolated code at a time", "required": true,
+          "synonyms": ["serialized", "one at a time", "mutual exclusion", "isolated"] },
+        { "id": "compilerEnforced", "text": "Isolation is enforced by the compiler, not by developer discipline", "required": true,
+          "synonyms": ["compile time", "compiler enforces", "checked at compile", "statically"] },
+        { "id": "awaitAccess", "text": "Cross-actor access is asynchronous and requires await", "required": false,
+          "synonyms": ["await", "asynchronous access", "from outside"] }
+      ],
+      "misconceptions": [
+        { "text": "an actor blocks other callers like a lock", "severity": "critical" },
+        { "text": "actors make code run on a background thread", "severity": "major" }
+      ],
+      "tradeoffKeywords": ["contention", "granularity", "performance", "hopping"],
+      "modelAnswerOutline": [
+        "Problem: shared mutable state accessed from multiple concurrent tasks causes data races.",
+        "An actor encapsulates its state and guarantees only one task touches it at a time.",
+        "The compiler enforces this: outside code cannot reach isolated state synchronously.",
+        "Access from outside is async, hence await, which is why it is not a lock.",
+        "Tradeoff: contention and actor hopping cost; isolate the state, not everything."
+      ],
+      "followUpSeeds": [
+        "How is that different from wrapping the state in a serial DispatchQueue?",
+        "What happens to the calling task while it waits for an actor?"
+      ],
+      "rubricVersion": "rubric.v1",
+      "tags": ["swift6", "high-value"]
+    },
+    {
+      "id": "q.concurrency.actors.002",
+      "contentVersion": "0.1.0",
+      "competencyIds": ["concurrency.actors"],
+      "primaryCompetencyId": "concurrency.actors",
+      "dimension": "explain",
+      "category": "concurrency",
+      "type": "explain",
+      "difficulty": 3,
+      "targetLevels": ["mid", "strongMid", "senior"],
+      "interviewFrequency": "occasional",
+      "prompt": "Explain actor reentrancy. Why does it surprise people, and how do you defend against it?",
+      "targetAnswerSeconds": 90,
+      "targetAnswerWords": 180,
+      "expectedConcepts": [
+        { "id": "suspension", "text": "An await inside an actor method suspends and lets other work run on the actor", "required": true,
+          "synonyms": ["suspension point", "yields", "interleave", "interleaving", "gives up"] },
+        { "id": "invariants", "text": "State can change across the await, so assumptions made before it may be stale", "required": true,
+          "synonyms": ["invariant", "stale", "re-check", "re-read", "assumptions"] },
+        { "id": "checkThenAct", "text": "Check-then-act sequences spanning an await are the classic bug", "required": true,
+          "synonyms": ["check then act", "guard then", "duplicate work", "double"] },
+        { "id": "defense", "text": "Defend by re-validating after the await, or by storing an in-flight task to deduplicate", "required": false,
+          "synonyms": ["re-validate", "recheck", "in-flight", "deduplicate", "cache the task"] }
+      ],
+      "misconceptions": [
+        { "text": "an actor method runs atomically from start to finish", "severity": "critical" },
+        { "text": "await inside an actor blocks other callers until it returns", "severity": "critical" }
+      ],
+      "tradeoffKeywords": ["atomicity", "granularity", "deduplication"],
+      "modelAnswerOutline": [
+        "Actor methods are not atomic: every await is a suspension point.",
+        "While suspended, another task can enter the actor and mutate state.",
+        "So anything read before the await may be stale after it.",
+        "Classic failure: `if cache[key] == nil { let v = await fetch(); cache[key] = v }` fetches twice.",
+        "Defenses: re-check state after resuming, or store the in-flight Task so callers await the same work."
+      ],
+      "followUpSeeds": [
+        "Write the corrected version of that caching example.",
+        "Does making the method nonisolated help here? Why or why not?"
+      ],
+      "rubricVersion": "rubric.v1",
+      "tags": ["swift6", "high-value", "reentrancy"]
+    }
+  ]
+}

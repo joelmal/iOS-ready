@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iosready.local/schemas/lesson-frontmatter.schema.json",
+  "title": "Lesson frontmatter",
+  "description": "YAML frontmatter on Content/lessons/<competencyId>.md. Body follows the 10-part structure in master plan Section 7.3.",
+  "type": "object",
+  "required": ["competencyId", "title", "contentVersion", "estimatedMinutes"],
+  "properties": {
+    "competencyId": { "type": "string" },
+    "title": { "type": "string" },
+    "contentVersion": { "type": "string" },
+    "estimatedMinutes": { "type": "integer", "minimum": 1, "maximum": 30 },
+    "relatedQuestionIds": { "type": "array", "items": { "type": "string" } },
+    "updatedAt": { "type": "string" }
+  }
+}

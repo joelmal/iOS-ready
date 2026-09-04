@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iosready.local/schemas/question.schema.json",
+  "title": "Question",
+  "description": "An interview question. expectedConcepts and misconceptions are what make offline heuristic grading work and what anchor AI grading. Master plan Section 19.2.",
+  "type": "object",
+  "required": ["id", "contentVersion", "competencyIds", "primaryCompetencyId", "dimension",
+               "category", "type", "difficulty", "targetLevels", "interviewFrequency",
+               "prompt", "expectedConcepts", "modelAnswerOutline", "rubricVersion"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^q\\.[a-z]+\\.[a-zA-Z]+\\.[0-9]{3}$" },
+    "contentVersion": { "type": "string" },
+    "competencyIds": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "primaryCompetencyId": { "type": "string" },
+    "dimension": { "type": "string", "enum": ["explain", "implement", "debug", "apply"] },
+    "category": { "type": "string" },
+    "type": { "type": "string",
+      "enum": ["explain", "scenario", "debugReasoning", "architecture", "behavioral", "resume"] },
+    "difficulty": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "targetLevels": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "interviewFrequency": { "type": "string", "enum": ["rare", "occasional", "common", "nearCertain"] },
+    "prompt": { "type": "string" },
+    "context": { "type": "string", "description": "Optional setup, code block, or scenario." },
+    "targetAnswerSeconds": { "type": "integer", "minimum": 15 },
+    "targetAnswerWords": { "type": "integer", "minimum": 20 },
+    "expectedConcepts": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "text", "required", "synonyms"],
+        "properties": {
+          "id": { "type": "string" },
+          "text": { "type": "string" },
+          "required": { "type": "boolean" },
+          "synonyms": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "misconceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "severity"],
+        "properties": {
+          "text": { "type": "string" },
+          "severity": { "type": "string", "enum": ["minor", "major", "critical"] }
+        }
+      }
+    },
+    "tradeoffKeywords": { "type": "array", "items": { "type": "string" } },
+    "modelAnswerOutline": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "followUpSeeds": { "type": "array", "items": { "type": "string" } },
+    "rubricVersion": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "sourceNotes": { "type": "string", "description": "Author note; never shown to the user." }
+  }
+}

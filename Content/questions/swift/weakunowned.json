@@ -1,0 +1,90 @@
+{
+  "contentVersion": "0.1.0",
+  "questions": [
+    {
+      "id": "q.swift.weakunowned.001",
+      "contentVersion": "0.1.0",
+      "competencyIds": ["swift.weakunowned", "swift.arc"],
+      "primaryCompetencyId": "swift.weakunowned",
+      "dimension": "explain",
+      "category": "swift",
+      "type": "explain",
+      "difficulty": 2,
+      "targetLevels": ["foundation", "mid", "strongMid"],
+      "interviewFrequency": "nearCertain",
+      "prompt": "When would you use unowned instead of weak, and what happens if you choose wrong?",
+      "targetAnswerSeconds": 75,
+      "targetAnswerWords": 150,
+      "expectedConcepts": [
+        { "id": "lifetime", "text": "unowned is for when the referenced object is guaranteed to outlive the reference", "required": true,
+          "synonyms": ["outlive", "lifetime", "guaranteed", "never nil", "same lifetime"] },
+        { "id": "weakOptional", "text": "weak is optional and becomes nil when the object deallocates", "required": true,
+          "synonyms": ["optional", "becomes nil", "set to nil", "zeroing"] },
+        { "id": "crash", "text": "Accessing an unowned reference after deallocation is a crash", "required": true,
+          "synonyms": ["crash", "trap", "runtime error", "dangling"] },
+        { "id": "default", "text": "Prefer weak when the lifetime relationship is not guaranteed", "required": false,
+          "synonyms": ["default to weak", "safer", "when in doubt"] }
+      ],
+      "misconceptions": [
+        { "text": "unowned is just weak without the optional, so it is a convenience choice", "severity": "critical" },
+        { "text": "unowned has meaningfully better performance so prefer it by default", "severity": "minor" }
+      ],
+      "tradeoffKeywords": ["safety", "optionality", "lifetime", "performance"],
+      "modelAnswerOutline": [
+        "Both break strong reference cycles; the difference is what happens at deallocation.",
+        "weak is optional and zeroes out — safe, but you handle the nil case.",
+        "unowned is non-optional and traps if accessed after the object is gone.",
+        "Use unowned only with a real lifetime guarantee, e.g. a child that cannot outlive its parent.",
+        "Choosing unowned to dodge optionality without that guarantee is how you ship a crash."
+      ],
+      "followUpSeeds": [
+        "Show me a closure capture list where unowned is genuinely correct.",
+        "Can a struct participate in a retain cycle? Explain."
+      ],
+      "rubricVersion": "rubric.v1",
+      "tags": ["high-value", "arc"]
+    },
+    {
+      "id": "q.swift.weakunowned.002",
+      "contentVersion": "0.1.0",
+      "competencyIds": ["swift.weakunowned", "swift.closures", "swift.escaping"],
+      "primaryCompetencyId": "swift.weakunowned",
+      "dimension": "debug",
+      "category": "swift",
+      "type": "debugReasoning",
+      "difficulty": 2,
+      "targetLevels": ["mid", "strongMid"],
+      "interviewFrequency": "common",
+      "prompt": "Does this code leak? Explain precisely why or why not.",
+      "context": "final class Loader {\n    var onDone: (() -> Void)?\n    var items: [String] = []\n\n    func start() {\n        onDone = {\n            self.items.append(\"done\")\n        }\n    }\n}",
+      "targetAnswerSeconds": 90,
+      "targetAnswerWords": 140,
+      "expectedConcepts": [
+        { "id": "cycle", "text": "Yes: the closure is stored on self and strongly captures self, forming a cycle", "required": true,
+          "synonyms": ["retain cycle", "reference cycle", "strong cycle", "leak", "cycle"] },
+        { "id": "storedClosure", "text": "The cycle exists because the closure is stored as a property, not merely passed", "required": true,
+          "synonyms": ["stored", "property", "escaping", "held", "retained by self"] },
+        { "id": "fix", "text": "Fix with [weak self] and a guard, or by nilling onDone after use", "required": true,
+          "synonyms": ["weak self", "capture list", "nil it out", "unowned"] }
+      ],
+      "misconceptions": [
+        { "text": "any closure that mentions self leaks", "severity": "major" },
+        { "text": "adding [weak self] is unnecessary because the closure is called only once", "severity": "major" }
+      ],
+      "tradeoffKeywords": ["ownership", "escaping", "lifetime"],
+      "modelAnswerOutline": [
+        "Yes, it leaks. self holds onDone; onDone captures self strongly.",
+        "That is a two-node cycle, so neither is ever released.",
+        "The key detail is that the closure is stored — a closure merely passed and executed would not cycle.",
+        "Fix: `onDone = { [weak self] in self?.items.append(\"done\") }`.",
+        "Alternative: clear `onDone = nil` once it has run, which breaks the cycle explicitly."
+      ],
+      "followUpSeeds": [
+        "How would you confirm this leak in Xcode rather than by reading the code?",
+        "Would making Loader a struct change the answer?"
+      ],
+      "rubricVersion": "rubric.v1",
+      "tags": ["high-value", "arc", "closures"]
+    }
+  ]
+}

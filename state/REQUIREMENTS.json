@@ -1,0 +1,1096 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "IOS_READY_MASTER_PLAN.md Section 25",
+  "statusLifecycle": [
+    "todo",
+    "in_progress",
+    "implemented",
+    "implemented-pending-verification",
+    "verified",
+    "blocked",
+    "deferred"
+  ],
+  "verificationTierNote": "Planning estimate of the highest environment tier needed to FULLY verify the requirement (master plan Section 22). Agents may correct an entry when they learn better; correct it, do not ignore it.",
+  "requirements": [
+    {
+      "id": "M0-R01",
+      "milestone": "M0",
+      "title": "Git repo initialized; .gitignore covers DerivedData, build output, .env, *.xcresult, .DS_Store, user Xcode state",
+      "status": "verified",
+      "evidence": [
+        ".gitignore",
+        ".editorconfig"
+      ],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M0-R02",
+      "milestone": "M0",
+      "title": "Packages/IOSReadyKit created with the module structure in 17.2 and one placeholder test per module that actually asserts something",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R03",
+      "milestone": "M0",
+      "title": "Thin iOS app target (LD-18) that launches to a dashboard placeholder on an iPhone simulator, depending on IOSReadyKit",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R04",
+      "milestone": "M0",
+      "title": "Swift 6 language mode and strict concurrency enabled for all first-party targets",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R05",
+      "milestone": "M0",
+      "title": "Makefile + scripts/ implementing the full Section 21 command contract, including capability detection and the VERIFY_SUMMARY block",
+      "status": "implemented-pending-verification",
+      "evidence": [
+        "Makefile",
+        "scripts/verify.sh",
+        "scripts/lib.sh",
+        "scripts/bootstrap.sh",
+        "scripts/test-core.sh",
+        "scripts/build-ios.sh",
+        "scripts/test-ios.sh"
+      ],
+      "verificationTier": "C",
+      "notes": "Tier C paths exercised and passing; the xcodebuild paths in build-ios.sh and test-ios.sh have only had their skip branches run. See VERIFICATION_QUEUE.md."
+    },
+    {
+      "id": "M0-R06",
+      "milestone": "M0",
+      "title": "scripts/ios-destination.sh resolves simulators dynamically; no hardcoded device names anywhere",
+      "status": "implemented-pending-verification",
+      "evidence": [
+        "scripts/ios-destination.sh"
+      ],
+      "verificationTier": "A",
+      "notes": "simctl output parsing has never run against real simctl output. Expect to fix it on a Mac."
+    },
+    {
+      "id": "M0-R07",
+      "milestone": "M0",
+      "title": "Content schemas as Swift Codable types in IOSReadyContent, plus JSON Schema files in Content/schemas/, plus a test asserting the two stay in sync",
+      "status": "in_progress",
+      "evidence": [
+        "Content/schemas/competency.schema.json",
+        "Content/schemas/question.schema.json",
+        "Content/schemas/lesson-frontmatter.schema.json",
+        "Content/schemas/behavioral-question.schema.json",
+        "Content/schemas/snippet-challenge.schema.json",
+        "Content/schemas/project-challenge.schema.json",
+        "Content/schemas/mission.schema.json",
+        "Content/schemas/interview-template.schema.json"
+      ],
+      "verificationTier": "C",
+      "notes": "JSON Schema half done. Swift Codable mirrors and the sync test still to write (needs a toolchain)."
+    },
+    {
+      "id": "M0-R08",
+      "milestone": "M0",
+      "title": "Content loader with schema validation, loading from a bundled resource directory; ContentValidationTests implementing every rule in 19.4 that applies at M0",
+      "status": "in_progress",
+      "evidence": [
+        "scripts/validate_content.py",
+        "Fixtures/content-validation/broken/README.md"
+      ],
+      "verificationTier": "C",
+      "notes": "Bootstrap validator implements the 19.4 rules that apply at M0 and has a proven negative fixture. The authoritative Swift ContentValidationTests and the content loader are not written."
+    },
+    {
+      "id": "M0-R09",
+      "milestone": "M0",
+      "title": "Sample content: \u2265 3 competencies, \u2265 5 questions, 1 lesson \u2014 enough to prove the pipeline, not the curriculum",
+      "status": "verified",
+      "evidence": [
+        "Content/competencies/concurrency.json",
+        "Content/competencies/swift.json",
+        "Content/questions/concurrency/actors.json",
+        "Content/questions/concurrency/mainactor.json",
+        "Content/questions/swift/weakunowned.json",
+        "Content/lessons/concurrency.actors.md"
+      ],
+      "verificationTier": "C",
+      "notes": "8 competencies, 5 questions, 1 lesson; validates clean."
+    },
+    {
+      "id": "M0-R10",
+      "milestone": "M0",
+      "title": "AIGateway protocol with MockGateway fully implemented and deterministic",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R11",
+      "milestone": "M0",
+      "title": "Store protocol + JSONL evidence log implementation with append/read/atomic-write/corrupt-line handling and tests",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R12",
+      "milestone": "M0",
+      "title": "Clock and UUIDProvider abstractions injected everywhere time or IDs are used",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R13",
+      "milestone": "M0",
+      "title": "state/ created and populated: PROJECT_STATE.json, REQUIREMENTS.json (seeded with every requirement ID in this document), PROGRESS.md, VERIFICATION_QUEUE.md, BLOCKERS.md, DECISIONS.md, ENVIRONMENT.md",
+      "status": "verified",
+      "evidence": [
+        "state/PROJECT_STATE.json",
+        "state/REQUIREMENTS.json",
+        "state/PROGRESS.md",
+        "state/VERIFICATION_QUEUE.md",
+        "state/BLOCKERS.md",
+        "state/DECISIONS.md",
+        "scripts/state_check.py"
+      ],
+      "verificationTier": "C",
+      "notes": "ENVIRONMENT.md is generated by bootstrap.sh and git-ignored by decision D-001."
+    },
+    {
+      "id": "M0-R14",
+      "milestone": "M0",
+      "title": "AGENTS.md and CLAUDE.md per 20.1",
+      "status": "verified",
+      "evidence": [
+        "AGENTS.md",
+        "CLAUDE.md"
+      ],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M0-R15",
+      "milestone": "M0",
+      "title": "docs/ARCHITECTURE.md, docs/DEVELOPMENT.md, docs/TESTING.md, docs/SECURITY_AND_PRIVACY.md, README.md",
+      "status": "verified",
+      "evidence": [
+        "README.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DEVELOPMENT.md",
+        "docs/TESTING.md",
+        "docs/SECURITY_AND_PRIVACY.md",
+        "docs/CONTENT_AUTHORING.md",
+        "docs/GLOSSARY.md"
+      ],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M0-R16",
+      "milestone": "M0",
+      "title": "ADRs 0001\u20130006 written (they record decisions already made in Section 5; write them as records, not as open questions)",
+      "status": "verified",
+      "evidence": [
+        "docs/adr/0001-platform-agnostic-domain-package.md",
+        "docs/adr/0002-append-only-evidence-log.md",
+        "docs/adr/0003-thin-xcode-shell.md",
+        "docs/adr/0004-ai-gateway-and-degradation.md",
+        "docs/adr/0005-swift-runner-over-node.md",
+        "docs/adr/0006-on-device-snippet-grading-limits.md"
+      ],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M0-R17",
+      "milestone": "M0",
+      "title": "Secret-scan check wired into make verify; a deliberate test fixture proves it catches a planted fake key (and the fixture is excluded from the real scan)",
+      "status": "verified",
+      "evidence": [
+        "scripts/secret-scan.sh",
+        "Fixtures/secret-scan/planted.txt"
+      ],
+      "verificationTier": "C",
+      "notes": "Proven both ways: --self-test detects 3 planted patterns; the real scan is clean."
+    },
+    {
+      "id": "M0-R18",
+      "milestone": "M0",
+      "title": "Dependency-direction test: no cycles; IOSReadyDomain has no first-party imports",
+      "status": "blocked",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": "Blocked by B-001: no Swift toolchain in this environment."
+    },
+    {
+      "id": "M0-R19",
+      "milestone": "M0",
+      "title": "CI workflow file that runs make verify on Linux (may be committed even if CI is not enabled yet)",
+      "status": "implemented-pending-verification",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ],
+      "verificationTier": "C",
+      "notes": "Never executed on a runner. See VERIFICATION_QUEUE.md."
+    },
+    {
+      "id": "M1-R01",
+      "milestone": "M1",
+      "title": "Full competency registry from Section 9 authored into Content/competencies/ with all fields populated",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R02",
+      "milestone": "M1",
+      "title": "150\u2013200 seeded questions meeting the M1 thresholds in 19.5, each with expectedConcepts, misconceptions, modelAnswerOutline, and followUpSeeds",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R03",
+      "milestone": "M1",
+      "title": "Question browser: filter by category, competency, difficulty, type, status, due-for-review; search by text",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R04",
+      "milestone": "M1",
+      "title": "Typed answer flow: prompt \u2192 answer \u2192 submit \u2192 structured feedback \u2192 evidence recorded \u2192 next",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R05",
+      "milestone": "M1",
+      "title": "HeuristicGateway fully implemented per 13.6 (not a stub) with its test suite",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R06",
+      "milestone": "M1",
+      "title": "RemoteGateway with the configuration/degradation chain of 13.2, plus response validation, repair retry, caching, and the active-mode badge. Works when configured; absent configuration changes nothing about usability",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R07",
+      "milestone": "M1",
+      "title": "Evidence log writing for every graded attempt, with all fields of 11.1",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R08",
+      "milestone": "M1",
+      "title": "Scoring engine implementing Section 11.3\u201311.5 exactly, with the full test suite of 11.10",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R09",
+      "milestone": "M1",
+      "title": "Simplified readiness: overall score, category scores, confidence, status classification, and floor checks. Tiers and blockers may be partial; the *shape* must match Section 11.6 so M5 extends rather than replaces",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R10",
+      "milestone": "M1",
+      "title": "Dashboard per 7.1, minus mission/mock-interview sections, with a working empty state and a single primary CTA",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R11",
+      "milestone": "M1",
+      "title": "Session generator implementing Section 12.1\u201312.2, including selectionReason surfaced in the UI",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R12",
+      "milestone": "M1",
+      "title": "Spaced repetition per 12.3 with its tests; due-date-aware selection",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R13",
+      "milestone": "M1",
+      "title": "Calibration session per 12.4",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R14",
+      "milestone": "M1",
+      "title": "Lesson rendering per 7.3, with lessons for at least the 20 highest-importance core competencies, each linking into practice",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R15",
+      "milestone": "M1",
+      "title": "History: per-question attempt history, per-competency evidence drill-down (Section 11.8 explainability chain, at least to the evidence-record level)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R16",
+      "milestone": "M1",
+      "title": "Persistence: everything survives relaunch; snapshot caching with invalidation; integrity check on launch",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R17",
+      "milestone": "M1",
+      "title": "Question flagging (7.4) writing to Content/flagged.json",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M1-R18",
+      "milestone": "M1",
+      "title": "Settings: AI mode + key entry to Keychain, session length, target level, target date, export/import, reset",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R19",
+      "milestone": "M1",
+      "title": "Full offline operation (24.6) \u2014 verified by a test run with no network configured",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M1-R20",
+      "milestone": "M1",
+      "title": "Accessibility pass on the practice and dashboard flows (24.2)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R01",
+      "milestone": "M2",
+      "title": "Audio recording with level metering, timer, re-record, and all interruption/permission states handled",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R02",
+      "milestone": "M2",
+      "title": "On-device transcription behind a Transcriber protocol, with an editable transcript before grading",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R03",
+      "milestone": "M2",
+      "title": "Speech delivery metrics per 14.3, computed offline, shown as coaching",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R04",
+      "milestone": "M2",
+      "title": "Spoken answers graded through the same path as typed answers, with delivery metrics feeding interviewDelivery",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R05",
+      "milestone": "M2",
+      "title": "Per-question answer timers with target durations, and a visible over-time indicator",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R06",
+      "milestone": "M2",
+      "title": "Behavioral bank: \u2265 60 questions covering every theme in 9.15, including behavioral.gap",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R07",
+      "milestone": "M2",
+      "title": "STAR-aware behavioral grading (gradeBehavioralAnswer) with red-flag and strong-signal detection; heuristic fallback that at minimum detects STAR components and specificity markers",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R08",
+      "milestone": "M2",
+      "title": "Behavioral story bank: record reusable STAR stories, tag to themes, detect uncovered themes and overused stories",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R09",
+      "milestone": "M2",
+      "title": "Resume import (PDF/text/manual) with on-device extraction and the low-text-PDF guidance path",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R10",
+      "milestone": "M2",
+      "title": "Resume parsing to ResumeProfile + Claims per 15.2, with heuristic fallback",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R11",
+      "milestone": "M2",
+      "title": "Resume-derived question generation covering every archetype in 7.9, \u2265 12 archetypes seeded",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R12",
+      "milestone": "M2",
+      "title": "Resume claim confidence, undefended-claim surfacing, and the competency mismatch detector (15.3)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R13",
+      "milestone": "M2",
+      "title": "Redaction pipeline and privacy controls per 15.4, including working \"delete resume data\"",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R14",
+      "milestone": "M2",
+      "title": "Mock interview engine: templates, sections, pacing, timer, resumable state",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R15",
+      "milestone": "M2",
+      "title": "Adaptive follow-ups (1\u20133 per seeded question) driven by the actual answer, budget-aware, with a scripted fallback in offline mode",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R16",
+      "milestone": "M2",
+      "title": "Mock interview scorecard per 7.8 including hiring-style assessment and next-training prescription",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R17",
+      "milestone": "M2",
+      "title": "Prescriptions feed the session generator (evidence + recommendation records)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R18",
+      "milestone": "M2",
+      "title": "Interview history with full transcripts, replayable and searchable",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M2-R19",
+      "milestone": "M2",
+      "title": "Reduced-fidelity offline mock interviews, clearly labeled and weighted lower in evidence",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M2-R20",
+      "milestone": "M2",
+      "title": "Prompt-injection defenses per 13.7, with the \"ignore previous instructions\" test",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R01",
+      "milestone": "M3",
+      "title": "iPhone code editor per 7.5 (monospaced, no autocorrect/smart quotes, Swift symbol accessory row, undo, line numbers, horizontal scroll)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R02",
+      "milestone": "M3",
+      "title": "Snippet challenge content: \u2265 60 challenges, \u2265 15 each of small exercise, finish-the-code, find-the-bug, code review",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R03",
+      "milestone": "M3",
+      "title": "Structural check engine per 16.1 with its tests, including \"solution passes its own checks\" validation",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R04",
+      "milestone": "M3",
+      "title": "AI code review (reviewCode) with rubric output; told which structural checks passed",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R05",
+      "milestone": "M3",
+      "title": "Code-review exercise grading against planted issues, with severity weighting and false-positive penalties",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R06",
+      "milestone": "M3",
+      "title": "Debugging exercise grading split into identification / explanation / fix quality",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R07",
+      "milestone": "M3",
+      "title": "Attempt history with stored diffs from starter; retry with attempt-number weighting",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R08",
+      "milestone": "M3",
+      "title": "Hints with a score cost, and full solution + explanation revealed only after submission",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R09",
+      "milestone": "M3",
+      "title": "Provisional-vs-verified evidence display: snippet evidence is marked provisional until Mac-verified where applicable",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R10",
+      "milestone": "M3",
+      "title": "Runner/ Swift executable with CLI mode (grade --challenge <id> --path <dir>)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R11",
+      "milestone": "M3",
+      "title": "xcodebuild build + test orchestration with dynamic destination resolution, timeouts, and process-group kill",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R12",
+      "milestone": "M3",
+      "title": "Result parsing with Xcode-version detection, xcresulttool primary path, regex fallback, and fixture-based parser tests that run on Linux",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R13",
+      "milestone": "M3",
+      "title": "Structural checks over submitted projects",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R14",
+      "milestone": "M3",
+      "title": "Security controls per 16.3: workspace-root confinement, bearer auth, LAN-only binding, build-phase and dependency allowlist scanning with refusal",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R15",
+      "milestone": "M3",
+      "title": "Local HTTP service with the Section 16.3 API, Bonjour advertisement, and a pairing flow",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R16",
+      "milestone": "M3",
+      "title": "iPhone client: discover runner, pair, list challenges, submit, poll, display results with diagnostics and failed tests",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R17",
+      "milestone": "M3",
+      "title": "Score computation per 16.4 including the AG-7 caps and warning penalties",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M3-R18",
+      "milestone": "M3",
+      "title": "\u2265 3 starter project challenges with visible tests, hidden tests, and requirements documents",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R19",
+      "milestone": "M3",
+      "title": "All 7 runner fixtures from 16.5 with expected results, and tests over them",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M3-R20",
+      "milestone": "M3",
+      "title": "docs/RUNNER.md: setup, pairing, troubleshooting, and an honest statement of the security model",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R01",
+      "milestone": "M4",
+      "title": "All 24 missions authored per 10.2/10.4 with objectives, competency mappings, tasks, verification method, and completion criteria",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R02",
+      "milestone": "M4",
+      "title": "Mission runner UI: browse the track, see prerequisites and progress, open the current mission, step through Learn \u2192 Explain \u2192 Guided \u2192 Independent \u2192 Debug/Review \u2192 Assessment",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M4-R03",
+      "milestone": "M4",
+      "title": "Mission progress persistence per step, resumable",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M4-R04",
+      "milestone": "M4",
+      "title": "Verification ladder per 10.3 implemented, with evidence weights matching the method used",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R05",
+      "milestone": "M4",
+      "title": "Mission test bundles: for every mission declaring automatedTests, a committed test file the runner applies to the user's project",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R06",
+      "milestone": "M4",
+      "title": "Structural checks for missions that declare them",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R07",
+      "milestone": "M4",
+      "title": "The mandatory-tests missions (07, 11, 12, 13, 14, 18, 19) ship with real, meaningful test suites \u2014 especially Mission 11's concurrent-401 single-flight refresh test",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M4-R08",
+      "milestone": "M4",
+      "title": "Mission completion writes implement and apply evidence and unlocks successors",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R09",
+      "milestone": "M4",
+      "title": "Lessons exist for every isCore competency, and question coverage reaches the M4 thresholds in 19.5 (\u2265 260 questions; \u2265 2 per core competency; \u2265 4 per importance-5 competency)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M4-R10",
+      "milestone": "M4",
+      "title": "Guided-app workspace configuration: the user points the app at their project directory; the runner uses it",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M4-R11",
+      "milestone": "M4",
+      "title": "Dashboard surfaces the current mission and its next task; the session generator can schedule mission work",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M4-R12",
+      "milestone": "M4",
+      "title": "Mission 24 capstone defined with hidden acceptance tests and a design-defense interview section",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R01",
+      "milestone": "M5",
+      "title": "Complete tier engine per 11.6 for Foundation, Mid-Level, and Strong Mid-Level, with every gate implemented",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R02",
+      "milestone": "M5",
+      "title": "Complete blocker generation per 11.7, ordered by expected readiness gain per minute, each with a concrete next action",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R03",
+      "milestone": "M5",
+      "title": "Consecutive mock-interview pass tracking with the no-failure-between rule",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R04",
+      "milestone": "M5",
+      "title": "Staleness and forgotten-skill detection with proactive review scheduling",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R05",
+      "milestone": "M5",
+      "title": "Interview-date awareness in scheduling per 12.3 (compression and final-14-day core coverage)",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R06",
+      "milestone": "M5",
+      "title": "Full explainability chain per 11.8, end to end from readiness to individual evidence records",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M5-R07",
+      "milestone": "M5",
+      "title": "Graduation assessment: a formal evaluation the user can request, which runs a targeted set of activities to resolve confidence gaps and then issues a verdict",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R08",
+      "milestone": "M5",
+      "title": "Readiness report per 11.9, exportable as Markdown/PDF",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M5-R09",
+      "milestone": "M5",
+      "title": "Score-over-time trends and per-category history",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M5-R10",
+      "milestone": "M5",
+      "title": "Historical re-derivation: changing ScoringConstants recomputes all history; a UI affordance shows \"scores recomputed under vN\"",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R11",
+      "milestone": "M5",
+      "title": "Job-description matching per 7.11 if and only if M5-R01\u2013R10 are complete",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M5-R12",
+      "milestone": "M5",
+      "title": "Content to 350+ questions per 19.5",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M6-R01",
+      "milestone": "M6",
+      "title": "Content expansion to 500+ questions, 100+ snippet challenges, 8+ project challenges",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M6-R02",
+      "milestone": "M6",
+      "title": "Performance pass: all benchmarks in 23.2 met on device, not just in tests",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R03",
+      "milestone": "M6",
+      "title": "Full accessibility audit across every screen (24.2), with VoiceOver walkthrough notes",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R04",
+      "milestone": "M6",
+      "title": "Error-state audit: every network/AI/runner/parse failure has a designed, non-technical user-facing state with a recovery action",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R05",
+      "milestone": "M6",
+      "title": "Backup/export hardening: scheduled local export, import validation, and a documented recovery procedure",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R06",
+      "milestone": "M6",
+      "title": "Migration test suite covering every shipped schema version",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M6-R07",
+      "milestone": "M6",
+      "title": "Optional daily reminder notification",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R08",
+      "milestone": "M6",
+      "title": "Onboarding polish: first-run flow that reaches a calibration session in under 2 minutes",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    },
+    {
+      "id": "M6-R09",
+      "milestone": "M6",
+      "title": "Content review pass: every question re-read for accuracy against current Swift/iOS behavior; flagged questions triaged",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "C",
+      "notes": ""
+    },
+    {
+      "id": "M6-R10",
+      "milestone": "M6",
+      "title": "Stability: no crashes across a two-week daily-use period; crash reporting (local, on-device) capturing any that occur",
+      "status": "todo",
+      "evidence": [],
+      "verificationTier": "A",
+      "notes": ""
+    }
+  ]
+}
